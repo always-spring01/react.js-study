@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
+        function App() {
+            const [minutes, setMinutes] = React.useState();
+            const minToHour = (event) => {                   // event : 매개변수 이름
+                setMinutes(event.target.value);
+            };
+            const hourToMin = (event) => {
+                setMinutes(event.target.value * 60);
+            }
+            const reset = () => {
+                setMinutes(0);
+            }
+            // onChange : 값의 변동이 있을 경우 value의 함수로 이벤트를 매개변수로 해서 전달한다.
+            return (
+                <div>
+                    <h1> Supser Converter</h1>
+                    <label for="minutes">Minutes</label>
+                    <input onChange={minToHour} value={minutes} id="minutes" placeholder="Minutes" type="number" />
+                    <label for="hours">Hours</label>
+                    <input onChange={hourToMin} value={minutes / 60} id ="hours" placeholder="Hours" type="number" />
+                    <button onClick={reset}>Reset</button>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, root);
+    </script>
+</html>

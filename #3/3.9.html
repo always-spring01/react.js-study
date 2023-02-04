@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
+
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState();
+            const [flipped, setFlipped] = React.useState();
+            const onChange = (event) => {                   // event : 매개변수 이름
+                setAmount(event.target.value);
+            };
+            const reset = () => {
+                setAmount(0);
+            }
+            const onFlip = () => {
+                setFlipped((current) => !current);
+                reset();
+            }
+            // onChange : 값의 변동이 있을 경우 value의 함수로 이벤트를 매개변수로 해서 전달한다.
+            return (
+                <div>
+                    <label for="minutes">Minutes</label>
+                    <input onChange={onChange} value={flipped ? amount * 60 : amount} id="minutes" placeholder="Minutes" type="number" disabled={flipped}/>
+                    <label for="hours">Hours</label>
+                    <input onChange={onChange} value={flipped ? amount : amount / 60} id ="hours" placeholder="Hours" type="number" disabled={!flipped}/>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>{flipped ? "Turn Back" : "Flip"}</button>
+                </div>
+            );
+        }
+
+        function KmsToMiles() {
+            return (
+                <div>
+                    <label for="kms">Kms</label>    
+                </div>
+            );
+        }
+
+        function App() {
+            const [index, setIndex] = React.useState("0");
+            const onSlect = (event) => {
+                setIndex(event.target.value);
+            }
+            return (
+                <div>
+                    <h1> Supser Converter</h1>
+                    <select value={index} onChange={onSlect}>
+                        <option value="0">Minutes & Hours</option>
+                        <option value="1">Kms & Miles</option>    
+                    </select>
+                    <hr />
+                    {index === "0" ? <MinutesToHours /> : null}
+                    {index === "1" ? <KmsToMiles /> : null}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, root);
+    </script>
+</html>
